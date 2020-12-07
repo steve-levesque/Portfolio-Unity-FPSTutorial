@@ -22,8 +22,8 @@ Press play on your Unity IDE.
 - Get Java JDK and SDK and place it in a clean place (no directory with spaces, will not work otherwise to get final product)
 - Edit -> Preferences -> External Tool -> link Java JDK & SDK
 - Build Settings -> Swtich Platform (Android) -> Build/Build & Run
-https://docs.unity3d.com/Manual/android-BuildProcess.html
+- More info: https://docs.unity3d.com/Manual/android-BuildProcess.html
 ### WebGL:
 - Build Settings -> Swtich Platform (WebGL) -> Check if Dev Build (*) -> Build/Build & Run
 - (*) Choose before Build/Run to do Development or Production Build.
-https://docs.unity3d.com/Manual/webgl-building.html
+- More info: https://docs.unity3d.com/Manual/webgl-building.html
