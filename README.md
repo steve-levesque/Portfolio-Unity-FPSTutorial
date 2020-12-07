@@ -2,6 +2,8 @@
 
 Sample project provided by the Unity IDE, "FPS Tutorials".
 
+The main scene of this project is "MainScene.unity". File -> Open Scene -> FPS/Scenes/MainScene.unity
+
 ## Modifications:
 ### Mobile interface
 Added mobile interface to play on phone or tablet.
