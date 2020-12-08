@@ -7,6 +7,7 @@ The main scene of this project is "MainScene.unity". File -> Open Scene -> FPS/S
 ## Modifications:
 ### Mobile interface
 Added mobile interface to play on phone or tablet.
+![alt text](https://github.com/steve-levesque/Portfolio-Unity-FPSTutorial/blob/main/Mobile_Screenshot.jpg?raw=true)
 
 ## Additional information
 ### Unity version:
