@@ -16,7 +16,15 @@ public class MobileController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+#if !UNITY_ANDROID
+        JumpButton.gameObject.SetActive(false);
+        ShootButton.gameObject.SetActive(false);
+        MoveJoystick.gameObject.SetActive(false);
+        TouchField.gameObject.SetActive(false);
+        Weapon1.gameObject.SetActive(false);
+        Weapon2.gameObject.SetActive(false);
+        Weapon3.gameObject.SetActive(false);
+#endif
     }
 
     // Update is called once per frame
