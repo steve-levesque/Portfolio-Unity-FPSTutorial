@@ -42,8 +42,8 @@ public class PlayerCharacterController : MonoBehaviour
     [Tooltip("Rotation speed multiplier when aiming")]
     public float aimingRotationMultiplier = 0.4f;
     [Range(0.1f, 1f)]
-    [Tooltip("Sensitivity when moving gun vision")]
-    public float shootSensitivity = 0.5f;
+    [Tooltip("Sensitivity when moving gun vision on mobile")]
+    public float shootSensitivityMobile = 0.5f;
 
     [Header("Jump")]
     [Tooltip("Force applied upward when jumping")]
@@ -245,16 +245,21 @@ public class PlayerCharacterController : MonoBehaviour
     {
         // horizontal character rotation
         {
-            /*
+#if UNITY_ANDROID
+            transform.Rotate(new Vector3(0f, (LookAxis.x * shootSensitivity * RotationMultiplier), 0f), Space.Self);
+#else
             // rotate the transform with the input speed around its local Y axis
             transform.Rotate(new Vector3(0f, (m_InputHandler.GetLookInputsHorizontal() * rotationSpeed * RotationMultiplier), 0f), Space.Self);
-            */
-            transform.Rotate(new Vector3(0f, (LookAxis.x * shootSensitivity * RotationMultiplier), 0f), Space.Self);
+#endif
         }
 
         // vertical camera rotation
         {
-            /*
+#if UNITY_ANDROID
+            m_CameraVerticalAngle += LookAxis.y * shootSensitivity * RotationMultiplier * -1f;
+            m_CameraVerticalAngle = Mathf.Clamp(m_CameraVerticalAngle, -89f, 89f);
+            playerCamera.transform.localEulerAngles = new Vector3(m_CameraVerticalAngle, 0, 0);
+#else
             // add vertical inputs to the camera's vertical angle
             m_CameraVerticalAngle += m_InputHandler.GetLookInputsVertical() * rotationSpeed * RotationMultiplier;
 
@@ -263,11 +268,7 @@ public class PlayerCharacterController : MonoBehaviour
 
             // apply the vertical angle as a local rotation to the camera transform along its right axis (makes it pivot up and down)
             playerCamera.transform.localEulerAngles = new Vector3(m_CameraVerticalAngle, 0, 0);
-            */
-
-            m_CameraVerticalAngle += LookAxis.y * shootSensitivity * RotationMultiplier * -1f;
-            m_CameraVerticalAngle = Mathf.Clamp(m_CameraVerticalAngle, -89f, 89f);
-            playerCamera.transform.localEulerAngles = new Vector3(m_CameraVerticalAngle, 0, 0);
+#endif
         }
 
         // character movement handling
@@ -281,9 +282,12 @@ public class PlayerCharacterController : MonoBehaviour
             float speedModifier = isSprinting ? sprintSpeedModifier : 1f;
 
             // converts move input to a worldspace vector based on our character's transform orientation
-            //Vector3 worldspaceMoveInput = transform.TransformVector(m_InputHandler.GetMoveInput());
+#if UNITY_ANDROID
             Vector3 worldspaceMoveInput = transform.TransformVector(new Vector3(RunAxis.x, 0f, RunAxis.y));
             worldspaceMoveInput = Vector3.ClampMagnitude(worldspaceMoveInput, 1);
+#else
+            Vector3 worldspaceMoveInput = transform.TransformVector(m_InputHandler.GetMoveInput());
+#endif
 
             // handle grounded movement
             if (isGrounded)
@@ -299,8 +303,11 @@ public class PlayerCharacterController : MonoBehaviour
                 characterVelocity = Vector3.Lerp(characterVelocity, targetVelocity, movementSharpnessOnGround * Time.deltaTime);
 
                 // jumping
-                //if (isGrounded && m_InputHandler.GetJumpInputDown())
+#if UNITY_ANDROID
                 if (isGrounded && JumpButtonPressed)
+#else
+                if (isGrounded && m_InputHandler.GetJumpInputDown())
+#endif
                 {
                     // force the crouch state to false
                     if (SetCrouchingState(false, false))

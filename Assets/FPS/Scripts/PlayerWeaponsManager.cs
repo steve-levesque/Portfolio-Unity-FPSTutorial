@@ -117,17 +117,18 @@ public class PlayerWeaponsManager : MonoBehaviour
             isAiming = m_InputHandler.GetAimInputHeld();
 
             // handle shooting
-            /*
-            bool hasFired = activeWeapon.HandleShootInputs(
-                m_InputHandler.GetFireInputDown(),
-                m_InputHandler.GetFireInputHeld(),
-                m_InputHandler.GetFireInputReleased());
-            */
+#if UNITY_ANDROID
             bool hasFired = activeWeapon.HandleShootInputs(
                 ShootButtonPressed,
                 ShootButtonPressed,
                 ShootButtonPressed
                 );
+#else
+            bool hasFired = activeWeapon.HandleShootInputs(
+                m_InputHandler.GetFireInputDown(),
+                m_InputHandler.GetFireInputHeld(),
+                m_InputHandler.GetFireInputReleased());
+#endif
 
             // Handle accumulating recoil
             if (hasFired)
@@ -151,7 +152,11 @@ public class PlayerWeaponsManager : MonoBehaviour
             }
             else
             {
+#if UNITY_ANDROID
                 switchWeaponInput = MobileWeaponChosen;//m_InputHandler.GetSelectWeaponInput();
+#else
+                switchWeaponInput = m_InputHandler.GetSelectWeaponInput();
+#endif
                 if (switchWeaponInput != 0)
                 {
                     if (GetWeaponAtSlotIndex(switchWeaponInput - 1) != null)

@@ -13,12 +13,10 @@ public class MobileController : MonoBehaviour
     public FixedButton Weapon2;
     public FixedButton Weapon3;
 
-    int counter;
-
     // Start is called before the first frame update
     void Start()
     {
-        counter = 0;
+
     }
 
     // Update is called once per frame

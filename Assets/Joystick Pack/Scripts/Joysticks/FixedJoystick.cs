@@ -6,7 +6,9 @@ public class FixedJoystick : Joystick
 {
     void Update()
     {
+#if UNITY_ANDROID
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+#endif
     }
 }

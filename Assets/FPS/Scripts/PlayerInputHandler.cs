@@ -43,8 +43,7 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (CanProcessInput())
         {
-            // Vector3 move = new Vector3(Input.GetAxisRaw(GameConstants.k_AxisNameHorizontal), 0f, Input.GetAxisRaw(GameConstants.k_AxisNameVertical));
-            Vector3 move = new Vector3();//new Vector3(Input.GetAxisRaw(GameConstants.k_AxisNameHorizontal), 0f, Input.GetAxisRaw(GameConstants.k_AxisNameVertical));
+             Vector3 move = new Vector3(Input.GetAxisRaw(GameConstants.k_AxisNameHorizontal), 0f, Input.GetAxisRaw(GameConstants.k_AxisNameVertical));
 
             // constrain move input to a maximum magnitude of 1, otherwise diagonal movement might exceed the max move speed defined
             move = Vector3.ClampMagnitude(move, 1);
@@ -99,7 +98,7 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (CanProcessInput())
         {
-            /*
+#if !UNITY_ANDROID
             bool isGamepad = Input.GetAxis(GameConstants.k_ButtonNameGamepadFire) != 0f;
             if (isGamepad)
             {
@@ -109,7 +108,7 @@ public class PlayerInputHandler : MonoBehaviour
             {
                 return Input.GetButton(GameConstants.k_ButtonNameFire);
             }
-            */
+#endif
         }
 
         return false;
@@ -119,11 +118,11 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (CanProcessInput())
         {
-            /*
+#if !UNITY_ANDROID
             bool isGamepad = Input.GetAxis(GameConstants.k_ButtonNameGamepadAim) != 0f;
             bool i = isGamepad ? (Input.GetAxis(GameConstants.k_ButtonNameGamepadAim) > 0f) : Input.GetButton(GameConstants.k_ButtonNameAim);
             return i;
-            */
+#endif
         }
 
         return false;
@@ -182,7 +181,7 @@ public class PlayerInputHandler : MonoBehaviour
 
     public int GetSelectWeaponInput()
     {
-        if (true)//CanProcessInput())
+        if (CanProcessInput())
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
                 return 1;
